@@ -521,6 +521,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
     uint256 public rewardsDuration;
     uint256 public lastUpdateTime;
     uint256 public rewardPerTokenStored;
+    uint256 public rewardsDistributed;
 
     mapping(address => uint256) public userRewardPerTokenPaid;
     mapping(address => uint256) public rewards;
@@ -609,6 +610,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         if (reward > 0) {
             rewards[msg.sender] = 0;
             rewardsToken.safeTransfer(msg.sender, reward);
+            rewardsDistributed += reward;
             emit RewardPaid(msg.sender, reward);
         }
     }
